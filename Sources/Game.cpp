@@ -16,6 +16,7 @@ Vector2 cannonPos;      //!< 砲台の位置
 Vector2 bulletPos;      //!< 弾の位置
 Rect    targetRect;     //!< ターゲットの矩形
 int     score;          //!< スコア
+Rect outsideRect;       //!< 画面右端の判定位置
 
 
 // ゲーム開始時に呼ばれる関数です。
@@ -54,6 +55,12 @@ void Update()
 
     // 雲の描画
     DrawImage("cloud1.png", cloudPos);
+    if (cloudPos.x > -999) {
+        cloudPos.x += 60 * Time::deltaTime;
+    }
+    if (cloudPos.x >= 320) {
+        cloudPos.x = -550;
+    }
 
     // 弾の描画
     if (bulletPos.x > -999) {
