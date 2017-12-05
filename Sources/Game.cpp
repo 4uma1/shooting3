@@ -15,8 +15,11 @@ Vector2 cloudPos;       //!< 雲の位置
 Vector2 cannonPos;      //!< 砲台の位置
 Vector2 bulletPos;      //!< 弾の位置
 Rect    targetRect;     //!< ターゲットの矩形
-int     score;          //!< スコア
 Rect outsideRect;       //!< 画面右端の判定位置
+int     score;          //!< スコア
+//Rect outsideRect;       //!< 画面右端の判定位置
+
+
 
 
 // ゲーム開始時に呼ばれる関数です。
@@ -25,6 +28,7 @@ void Start()
     cloudPos = Vector2(-320, 100);
     cannonPos = Vector2(-80, -150);
     targetRect = Rect(80, -140, 40, 40);
+    outsideRect = Rect(320, -240, 320, 240);
     bulletPos.x = -999;
     score = 0;
     PlayBGM("bgm_maoudamashii_8bit07.mp3");
@@ -40,6 +44,7 @@ void Update()
     }
 
     // 弾の移動
+/*<<<<<<< HEAD
     if (bulletPos.x > -999) {
         bulletPos.x += 300 * Time::deltaTime;
 
@@ -50,8 +55,24 @@ void Update()
             bulletPos.x = -999; // 弾を発射可能な状態に戻す
             PlaySound("se_maoudamashii_explosion06.mp3");
         }
-    }
+=======*/
+ if (bulletPos.x > -999) {
+    bulletPos.x += 200 * Time::deltaTime;
 
+    // ターゲットと弾の当たり判定
+    Rect bulletRect(bulletPos, Vector2(32, 20));
+    if (targetRect.Overlaps(bulletRect)) {
+        score += 100;         // スコアの加算
+        bulletPos.x = -999; // 弾を発射可能な状態に戻す
+        PlaySound("se_maoudamashii_explosion06.mp3");
+//>>>>>>> 16193cb7de0102ec0d0c25a560e00345d177cbb8
+    }
+    //ターゲットが画面右の外に出たときの処理
+    if (outsideRect.Overlaps(bulletRect)) {
+        
+        bulletPos.x = -999; // 弾を発射可能な状態に戻す
+    }
+}
     // 背景の描画
     Clear(Color::cyan);
     FillRect(Rect(-320, -240, 640, 100), Color::green);
