@@ -17,21 +17,20 @@ Vector2 bulletPos;      //!< 弾の位置
 Rect    targetRect;     //!< ターゲットの矩形
 Rect outsideRect;       //!< 画面右端の判定位置
 int     score;          //!< スコア
-//Rect outsideRect;       //!< 画面右端の判定位置
-
-
-
+int     cannonfrag ;          //!<砲台のためのフラグ
 
 // ゲーム開始時に呼ばれる関数です。
 void Start()
 {
     cloudPos = Vector2(-320, 100);
-    cannonPos = Vector2(-80, -150);
-    targetRect = Rect(80, -140, 40, 40);
-    outsideRect = Rect(320, -240, 320, 240);
+    cannonPos = Vector2(-310, -150);
+    targetRect = Rect(280, -140, 40, 40);
+     outsideRect = Rect(320, -240, 320, 240);
     bulletPos.x = -999;
     score = 0;
+    cannonfrag  = 0;
     PlayBGM("bgm_maoudamashii_8bit07.mp3");
+
 }
 
 // 1/60秒ごとに呼ばれる関数です。モデルの更新と画面の描画を行います。
@@ -95,6 +94,22 @@ void Update()
     FillRect(Rect(cannonPos.x-10, -140, 20, 100), Color::blue);
     DrawImage("cannon.png", cannonPos);
 
+    //砲台の上下移動
+    if (cannonfrag == 0) {
+        cannonPos.y += 1;
+        if (cannonPos.y > -60) {
+            cannonfrag -= 1;
+        }
+    }
+    if (cannonfrag == -1){
+        cannonPos.y -= 1;
+        if (cannonPos.y < -150) {
+            cannonfrag += 1;
+            
+        }
+        
+    }
+    
     // ターゲットの描画
     FillRect(targetRect, Color::red);
 
