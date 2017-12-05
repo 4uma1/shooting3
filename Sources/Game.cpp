@@ -16,7 +16,7 @@ Vector2 cannonPos;      //!< 砲台の位置
 Vector2 bulletPos;      //!< 弾の位置
 Rect    targetRect;     //!< ターゲットの矩形
 int     score;          //!< スコア
-
+int     cannonfrag ;          //!<砲台のためのフラグ
 
 // ゲーム開始時に呼ばれる関数です。
 void Start()
@@ -26,6 +26,7 @@ void Start()
     targetRect = Rect(280, -140, 40, 40);
     bulletPos.x = -999;
     score = 0;
+    cannonfrag  = 0;
 }
 
 // 1/60秒ごとに呼ばれる関数です。モデルの更新と画面の描画を行います。
@@ -64,6 +65,22 @@ void Update()
     FillRect(Rect(cannonPos.x-10, -140, 20, 100), Color::blue);
     DrawImage("cannon.png", cannonPos);
 
+    //砲台の上下移動
+    if (cannonfrag == 0) {
+        cannonPos.y += 1;
+        if (cannonPos.y > -60) {
+            cannonfrag -= 1;
+        }
+    }
+    if (cannonfrag == -1){
+        cannonPos.y -= 1;
+        if (cannonPos.y < -150) {
+            cannonfrag += 1;
+            
+        }
+        
+    }
+    
     // ターゲットの描画
     FillRect(targetRect, Color::red);
 
