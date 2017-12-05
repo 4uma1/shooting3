@@ -15,8 +15,9 @@ Vector2 cloudPos;       //!< 雲の位置
 Vector2 cannonPos;      //!< 砲台の位置
 Vector2 bulletPos;      //!< 弾の位置
 Rect    targetRect;     //!< ターゲットの矩形
+Rect outsideRect;       //!< 画面右端の判定位置
 int     score;          //!< スコア
-Rect    outsideRect;    //!< 画面右端の判定位置
+
 
 
 
@@ -26,6 +27,7 @@ void Start()
     cloudPos = Vector2(-320, 100);
     cannonPos = Vector2(-80, -150);
     targetRect = Rect(80, -140, 40, 40);
+    outsideRect = Rect(320, -240, 320, 240);
     bulletPos.x = -999;
     score = 0;
 }
@@ -47,7 +49,6 @@ void Update()
     if (targetRect.Overlaps(bulletRect)) {
         score += 100;         // スコアの加算
         bulletPos.x = -999; // 弾を発射可能な状態に戻す
-        PlaySound("se_maoudamashii_explosion06.mp3");
     }
     //ターゲットが画面右の外に出たときの処理
     if (outsideRect.Overlaps(bulletRect)) {
